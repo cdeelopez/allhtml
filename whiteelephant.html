@@ -7,7 +7,7 @@
     <style>
       body {
         font-family: 'Open Sans', sans-serif;
-        color: rgba(0,0,0,0.8);
+        color: #65452a;
         margin: 0;
       }
       h1 {
@@ -15,26 +15,35 @@
         margin: 0;
         padding: 16px 0;
         border-bottom: 1px solid rgba(0,0,0,0.1);
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
+        color: rgb(245, 222, 179);
+        text-shadow: 1px 1px rgba(0,0,0,0.7);
+        position: relative;
+        z-index: 10;
       }
       header {
         position: relative;
+        background: url(https://cdn.pixabay.com/photo/2016/12/16/15/25/christmas-1911637_1280.jpg) left 30% no-repeat;
+        background-size: cover;
+        opacity: 0.9;
+        box-shadow: inset 0px 0px 100px rgba(0,0,0,0.8);
       }
+      
       .drawerOpen {
         position: absolute;
-        left: 24px;
+        left: 16px;
         top: 50%;
         transform: translate(0, -50%);
         padding: 6px 12px 6px 16px;
         border-radius: 4px;
-        color: rgba(0,0,0,0.8);
-        box-shadow: 1px 1px 6px 0 rgba(0,0,0,0.2);
+        color: #65452a;
+        background: wheat;
         display: flex;
         align-items: center;
         text-decoration: none;
         font-size: 12px;
         text-transform: uppercase;
-        opacity: 0.7;
+        z-index: 10;
       }
       .drawerOpen:hover {
         opacity: 1;
@@ -50,10 +59,12 @@
       }
       input[type='text'] {
         font-family: 'Open Sans', sans-serif;
+        color: #65452a;
       }
       .nameList {
         border-right: 1px solid rgba(0,0,0,0.1);
         padding: 16px;
+        box-shadow: inset 0px 0px 100px rgba(0,0,0,0.8);
       }
       .giftGrid {
         height: calc( 100vh - 77px);
@@ -65,11 +76,11 @@
         grid-template-rows: repeat(4, 1fr);
         grid-template-columns: repeat(6, 1fr);
         grid-gap: 16px;
-    
-        margin: 16px;
+        padding: 16px;
+        background: rgba(245, 222, 179, 0.3);
       }
       .gift {
-        background: #eee;
+        background: rgba(0,0,0,0.08);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -111,7 +122,7 @@
         appearance: none;
         border: none;
         margin: 4px;
-        background: rgba(255,255,255,0.5);
+        background: rgba(255,255,255,0.4);
         font-size: 16px;
         padding: 2px;
         text-align: center;
@@ -138,7 +149,7 @@
         height: 8px;
         border: 1px solid rgba(0,0,0,0.1);
         border-radius: 8px;
-        background: rgb(51, 153, 255);
+        background: #65452a;
         opacity: 0.1;
         transition: all 0.3s ease-in-out;
       }
@@ -157,22 +168,20 @@
       }
       .giftNumber {
         position: absolute;
-        top: 8px;
-        right: 8px;
-        width: 30px;
+        top: -8px;
+        right: -8px;
+        width: 40px;
         height: 30px;
-        border-radius: 30px;
-        color: rgba(0,0,0,0.5);
-        background: white;
+        background: rgba(245, 222, 179, 0.8);
         text-align: center;
         text-decoration: none;
         box-shadow: 1px 1px 4px 0 rgba(0,0,0,0.3);
+        color: rgba(0,0,0,0.6);
       }
       .giftNumber span{
         position: relative;
         top: 2px;
         font-size: 18px;
-        font-weight: 600;
       }
       .description {
         font-size: 12px;
@@ -192,6 +201,8 @@
         position: relative;
         display: grid;
         grid-template-rows: auto 66px;
+        grid-gap: 24px;
+        background: url(https://cdn.pixabay.com/photo/2016/10/27/18/54/wood-1776060_1280.jpg) center right;
       }
       .nameList ul {
         margin: 0;
@@ -204,11 +215,18 @@
         font-size: 16px;
         padding: 8px;
         border-radius: 4px;
-        background: #fafafa;
+        background: rgba(0,0,0,0.5);
+        color: white;
       }
       .nameList li.giftSelected {
-        background: rgba(0,0,0,0.2);
-        color: white;
+        background: rgba(245, 222, 179, 0.8);
+        color: #65452a;
+      }
+      .nameList .button {
+        background: rgba(255,255,255,0.6);
+      }
+      .nameList .button:hover {
+        color: #fff;
       }
       .button {
         text-transform: uppercase;
@@ -220,6 +238,7 @@
         cursor: pointer;
         margin-top: 8px;
         transition: all 0.3s ease-in-out;
+        font-weight: 600;
       }
       .button.press {
         animation: press 0.2s ease-in-out 1;
@@ -247,12 +266,11 @@
         position: fixed;
         top: 0;
         background: white;
-        z-index: 1;
+        z-index: 20;
         transition: all 0.3s ease-in-out;
         padding: 32px 16px 24px;
         box-sizing: border-box;
         overflow: auto;
-
       }
       .drawer.open {
         transform: translate(0, 0);
@@ -322,7 +340,7 @@
       }
       .close {
         position: absolute;
-        right: 0px;
+        right: 8px;
         top: 8px;
         width: 16px;
         height: 16px;
@@ -608,7 +626,7 @@
           <ul></ul>
         </div>
         <div class="buttons">
-          <span class="button randomize">Randomize</span>
+          <span class="button randomize">Randomize Names</span>
           <span class="button clearStorage">Clear Gift States</span>
         </div>
       </div>
