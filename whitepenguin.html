@@ -397,6 +397,17 @@
       .close:after {
         transform: rotate(-45deg);
       }
+      .gridInput {
+        margin-top: 16px;
+        text-align: center;
+      }
+      .gridInput input {
+        width: 30px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        text-align: center;
+        color: #333;
+      }
  
       @keyframes shake {
         10%, 90% {
@@ -479,6 +490,15 @@
           return false
         })
 
+        $(".gridInput input").on("change", function() {
+          const val = $(this).val()
+          const name = $(this).attr("name")
+          if (!isNaN(parseInt(val))) {
+            localStorage.setItem(`hw-wh-eleph-grid-${name}`, val)
+            setGrid()
+          }
+        })
+
         $(".clearStorage").click(e => {
           const giftEntries = localStorage.getItem("hw-wh-eleph-giftlist")
           localStorage.clear()
@@ -528,7 +548,7 @@
           const checkCount = localStorage.getItem(`hw-wh-eleph-${gifterLower}-checked`) || 0
           $(".giftTable").append(`
           <div class="gift ${isOpen == "true" ? "open" : ""}" data-id="${gifterLower}">
-            <input type="text" class="giftRecipient" value="${recipient}">
+            <input type="text" class="giftRecipient" value="${recipient}" autocomplete="off">
             <a href="${value.image}" target="_blank" class="giftNumber">
               <span>${index + 1}</span>
             </a>
@@ -568,6 +588,16 @@
           })
         }
 
+        const setGrid = () =>{
+          const cols = localStorage.getItem("hw-wh-eleph-grid-cols") || 6
+          const rows = localStorage.getItem("hw-wh-eleph-grid-rows") || 4
+          $(".gridInput input[name='cols']").val(cols)
+          $(".gridInput input[name='rows']").val(rows)
+          $(".giftTable").css("grid-template-columns", `repeat(${cols}, 1fr)`)
+                .css("grid-template-rows", `repeat(${rows}, 1fr)`)
+        }
+
+        setGrid()
         displayGifters()
         displayGiftInput()
         highlightDone()
@@ -676,6 +706,10 @@
         <span class="button addGift">Add Gift</span>
         <span class="button updatePage">Update Page</span>
         <span class="button clearGifts buttonWarning">Clear Gifts</span>
+      </div>
+      <div class="gridInput">
+        <input type="text" name="cols" value="6" />
+        <input type="text" name="rows" value="4" />
       </div>
       <div class="giftEntries">
       </div>
