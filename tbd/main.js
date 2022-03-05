@@ -27,28 +27,29 @@ $(function() {
     const endGame = () => {
         clearInterval(showInterval)
         showInterval = undefined
-        displayLostPopup()
         
         setStats(items.LOSSES, grades.F)
+        displayLostPopup()
     }
 
     const displayLostPopup = () => {
         $(".error-popup h2").addClass(grades.F)
         $(".error-popup p").text(guessme)
+        displayStats($(".error-popup .stats"))
         $(".error-popup").show()
     }
 
     const winGame = () => {
         const pct = (displayed / lettersCnt) * 100
         const grade = getGrade(pct)
-        displayWonPopup(grade)
-        const currGradeCount = localStorage.getItem(grade) || 0
-        localStorage.setItem(grade, parseInt(currGradeCount) + 1)
+        
         setStats(items.WINS, grade)
+        displayWonPopup(grade)
     }
 
     const displayWonPopup = (grade) => {
         $(".win-popup h2").addClass(grade)
+        displayStats($(".win-popup .stats"))
         $(".win-popup").show()
     }
 
@@ -140,20 +141,12 @@ const getTodaysStat = () => {
         localStorage.removeItem(items.GAME_STATE)
     }
 
-    return getGameState()
+    return getObjectItem(items.GAME_STATE)
 }
 
-const getGameState = () => {
-    const state = localStorage.getItem(items.GAME_STATE)
-    if(!state) return state
+const getObjectItem = (key) => {
+    const state = localStorage.getItem(key) || "{}"
     return $.parseJSON(state)
-}
-
-const setupWithTodaysState = () => {
-    const state = localStorage.getItem(items.GAME_STATE)
-    if(!state) return
-    const gameState = $.parseJSON(state)
-    console.log(gameState)
 }
 
 const onGuess = () => {
@@ -192,11 +185,16 @@ const onGuessSubmit = (answer) => {
 const setStats = (stat, grade) => {
     const cnt = localStorage.getItem(stat) || 0
     localStorage.setItem(stat, parseInt(cnt) + 1)
-    const currStats = getGameState()
+    const currStats = getObjectItem(items.GAME_STATE)
     currStats.didWin = stat === items.WINS
     currStats.isComplete = true
     currStats.grade = grade
     localStorage.setItem(items.GAME_STATE, JSON.stringify(currStats))
+
+    const gameGrades = getObjectItem(items.GRADES)
+    const currGradeCount = gameGrades[grade] || 0
+    gameGrades[grade] = currGradeCount + 1
+    localStorage.setItem(items.GRADES, JSON.stringify(gameGrades))
 }
 
 const getGrade = (pct) => {
@@ -204,6 +202,35 @@ const getGrade = (pct) => {
     else if(pct > 40.0 && pct <= 60.0) return grades.B
     else if(pct > 60.0 && pct <= 80.0) return grades.C
     else return grades.D
+}
+
+const displayStats = (el) => {
+    const gameGrades = getObjectItem(items.GRADES)
+    const arr = Object.values(gameGrades)
+    const max = Math.max(...arr) || 5
+    const statsHtml =  `
+        <div class="chart">
+            <span data-grade="${grades.A}">&nbsp;</span>
+            <span data-grade="${grades.B}">&nbsp;</span>
+            <span data-grade="${grades.C}">&nbsp;</span>
+            <span data-grade="${grades.D}">&nbsp;</span>
+            <span data-grade="${grades.F}">&nbsp;</span>
+        </div>
+        <div class="chart-labels">
+            <span class="${grades.A}"></span>
+            <span class="${grades.B}"></span>
+            <span class="${grades.C}"></span>
+            <span class="${grades.D}"></span>
+            <span class="${grades.F}"></span>
+        </div>
+    `
+    el.html(statsHtml)
+    el.find(".chart span").each((i, el) => {
+        const g = $(el).attr("data-grade")
+        const ht = ((gameGrades[g] || 0) / max) * 100
+        $(el).css("height", `${ht}px`)
+        if(gameGrades[g]) $(el).text(gameGrades[g])
+    })
 }
 
 const getTodaysDt = () => {
@@ -231,6 +258,7 @@ const items = {
     LOSSES: "res-losses",
     LAST_PLAYED: "last-played-date",
     GAME_STATE: "game-state",
+    GRADES: "grades"
 }
 
 const grades = {
