@@ -1,0 +1,114 @@
+body {
+    font-family: 'Fredoka', sans-serif;
+    text-align: center;
+}
+.guessbox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.guessbox div {
+    display: flex;
+}
+.guessbox span {
+    width: 26px;
+    height: 26px;
+    margin: 8px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    font-size: 18px;
+}
+.guessbox .has-space {
+    margin-left: 36px;
+}
+.guess-action {
+    display: inline-block;
+    margin: 24px auto;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    background: #a5066c;
+    padding: 4px 16px;
+    color: white;
+    cursor: pointer;
+}
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    display: none;
+}
+.popup .content {
+    max-width: 90vw;
+    min-width: 300px;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 24px;
+}
+.guessbox input {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    font-size: 18px;
+    font-family: 'Fredoka', sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+}
+.popup h2, .popup h3 {
+    margin: 0;
+}
+.error-popup p {
+    letter-spacing: 1px;
+}
+.popup h2 {
+    font-family: 'Rock Salt', cursive;
+    display: inline-block;
+    width: 48px;
+    border-radius: 4px;
+    color: white;
+    margin-top: 8px;
+}
+.popup h2:before {
+    display: inline-block;
+    font-size: 20px;
+}
+.popup .grade-a {
+    background: #2b922b;
+}
+.popup .grade-a:before {
+    content: "A";
+}
+.popup .grade-b {
+    background: #66be1e;
+}
+.popup .grade-b:before {
+    content: "B";
+}
+.popup .grade-c {
+    background: #d7d72b;
+}
+.popup .grade-c:before {
+    content: "C";
+}
+.popup .grade-d {
+    background: rgb(243, 166, 22);
+}
+.popup .grade-d:before {
+    content: "D";
+}
+.popup .grade-f {
+    background: #d21818;
+    width: 100px;
+}
+.popup .grade-f:before {
+    content: "Failed";
+}
