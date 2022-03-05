@@ -81,34 +81,69 @@ body {
     display: inline-block;
     font-size: 20px;
 }
-.popup .grade-a {
+.popup .grade-a,
+.stats .chart span:nth-child(1) {
     background: #2b922b;
 }
 .popup .grade-a:before {
     content: "A";
 }
-.popup .grade-b {
+.popup .grade-b,
+.stats .chart span:nth-child(2) {
     background: #66be1e;
 }
 .popup .grade-b:before {
     content: "B";
 }
-.popup .grade-c {
+.popup .grade-c,
+.stats .chart span:nth-child(3) {
     background: #d7d72b;
 }
 .popup .grade-c:before {
     content: "C";
 }
-.popup .grade-d {
+.popup .grade-d,
+.stats .chart span:nth-child(4) {
     background: rgb(243, 166, 22);
 }
 .popup .grade-d:before {
     content: "D";
 }
-.popup .grade-f {
-    background: #d21818;
+.popup h2.grade-f {
     width: 100px;
+}
+.popup .grade-f,
+.stats .chart span:nth-child(5) {
+    background: #d21818;
 }
 .popup .grade-f:before {
     content: "Failed";
+}
+.popup .stats .grade-f:before {
+    content: "F";
+}
+
+.stats .chart{
+    width: 100%;
+    height: 100px;
+}
+.stats .chart span {
+    height: 100px;
+    align-self: end;
+    opacity: 0.7;
+    line-height: 30px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+.stats .chart,
+.stats .chart-labels {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-content: center;
+    font-size: 11px;
+    color: white;
+}
+.stats .chart-labels {
+    font-family: 'Rock Salt', cursive;
 }
